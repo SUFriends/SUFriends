@@ -1,0 +1,9 @@
+*.secret
+
+node_modules
+
+package*
+
+truffle*
+
+build/*
