@@ -12,6 +12,12 @@ module.exports = async function main (callback) {
         const Box = artifacts.require('Box');
         const box = await Box.deployed();
 
+        const Gov = artifacts.require('GovernanceToken');
+        const gov = await Gov.deployed();
+
+        // gov get func
+        console.log((await gov.get()).toString());
+
         // set box value to 42
         await box.store(42);
 
