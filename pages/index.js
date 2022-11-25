@@ -1,11 +1,18 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
-import { AppBar, Box, Toolbar, Container, Typography, Button } from '@mui/material';
+import { styled, AppBar, Box, Toolbar, Container, Typography, Button } from '@mui/material';
 import Image from 'next/image';
 import Head from 'next/head';
 import logo from '../public/logo.png';
 
 const navItems = ['Home', 'About', 'Contact'];
+const StyledToolbar = styled(Toolbar)(({ theme }) => ({
+  alignItems: 'flex-center',
+  // Override media queries injected by theme.mixins.toolbar
+  '@media all': {
+    minHeight: 86,
+  },
+}));
+
 
 function DrawerAppBar(props) {
   return (
@@ -15,23 +22,23 @@ function DrawerAppBar(props) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <AppBar component="nav" color='transparent'>
+      <AppBar component="nav" color='transparent' >
         <Container>
-          <Toolbar>
+          <StyledToolbar>
             <Image
               alt="Logo"
               src={logo}
               placeholder="blur"
-              width={150}
+              width={200}
             />
-            <Box sx={{ ml:"20px"}}>
+            <Box sx={{ ml: 2, mt: 1}}>
               {navItems.map((item) => (
-                <Button key={item} >
+                <Button key={item} sx={{ mx: 1}} variant="text" size='large'>
                   {item}
                 </Button>
               ))}
             </Box>
-          </Toolbar>
+          </StyledToolbar>
         </Container>
       </AppBar>
       <Container component="main" sx={{ p: 3 }}>
