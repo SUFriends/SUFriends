@@ -1,115 +1,78 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css';
+import * as React from 'react';
+import PropTypes from 'prop-types';
+import { AppBar, Box, Toolbar, Container, Typography, Button } from '@mui/material';
+import Image from 'next/image';
+import Head from 'next/head';
+import logo from '../public/logo.png';
 
-export default function Home() {
+const navItems = ['Home', 'About', 'Contact'];
+
+function DrawerAppBar(props) {
   return (
-    <div className={styles.container}>
+    <Box sx={{ display: 'flex' }}>
       <Head>
-        <title>Create Next App</title>
+        <title>SUFriends</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing <code>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel" className={styles.logo} />
-        </a>
-      </footer>
-
-      <style jsx>{`
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-        footer {
-          width: 100%;
-          height: 100px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-        footer img {
-          margin-left: 0.5rem;
-        }
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          text-decoration: none;
-          color: inherit;
-        }
-        code {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          font-size: 1.1rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono,
-            DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-      `}</style>
-
-      <style jsx global>{`
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto,
-            Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue,
-            sans-serif;
-        }
-        * {
-          box-sizing: border-box;
-        }
-      `}</style>
-    </div>
-  )
+      <AppBar component="nav" color='transparent'>
+        <Container>
+          <Toolbar>
+            <Image
+              alt="Logo"
+              src={logo}
+              placeholder="blur"
+              width={150}
+            />
+            <Box sx={{ ml:"20px"}}>
+              {navItems.map((item) => (
+                <Button key={item} >
+                  {item}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        </Container>
+      </AppBar>
+      <Container component="main" sx={{ p: 3 }}>
+        <Toolbar />
+        <Typography>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique unde
+          fugit veniam eius, perspiciatis sunt? Corporis qui ducimus quibusdam,
+          aliquam dolore excepturi quae. Distinctio enim at eligendi perferendis in
+          cum quibusdam sed quae, accusantium et aperiam? Quod itaque exercitationem,
+          at ab sequi qui modi delectus quia corrupti alias distinctio nostrum.
+          Minima ex dolor modi inventore sapiente necessitatibus aliquam fuga et. Sed
+          numquam quibusdam at officia sapiente porro maxime corrupti perspiciatis
+          asperiores, exercitationem eius nostrum consequuntur iure aliquam itaque,
+          assumenda et! Quibusdam temporibus beatae doloremque voluptatum doloribus
+          soluta accusamus porro reprehenderit eos inventore facere, fugit, molestiae
+          ab officiis illo voluptates recusandae. Vel dolor nobis eius, ratione atque
+          soluta, aliquam fugit qui iste architecto perspiciatis. Nobis, voluptatem!
+          Cumque, eligendi unde aliquid minus quis sit debitis obcaecati error,
+          delectus quo eius exercitationem tempore. Delectus sapiente, provident
+          corporis dolorum quibusdam aut beatae repellendus est labore quisquam
+          praesentium repudiandae non vel laboriosam quo ab perferendis velit ipsa
+          deleniti modi! Ipsam, illo quod. Nesciunt commodi nihil corrupti cum non
+          fugiat praesentium doloremque architecto laborum aliquid. Quae, maxime
+          recusandae? Eveniet dolore molestiae dicta blanditiis est expedita eius
+          debitis cupiditate porro sed aspernatur quidem, repellat nihil quasi
+          praesentium quia eos, quibusdam provident. Incidunt tempore vel placeat
+          voluptate iure labore, repellendus beatae quia unde est aliquid dolor
+          molestias libero. Reiciendis similique exercitationem consequatur, nobis
+          placeat illo laudantium! Enim perferendis nulla soluta magni error,
+          provident repellat similique cupiditate ipsam, et tempore cumque quod! Qui,
+          iure suscipit tempora unde rerum autem saepe nisi vel cupiditate iusto.
+          Illum, corrupti? Fugiat quidem accusantium nulla. Aliquid inventore commodi
+          reprehenderit rerum reiciendis! Quidem alias repudiandae eaque eveniet
+          cumque nihil aliquam in expedita, impedit quas ipsum nesciunt ipsa ullam
+          consequuntur dignissimos numquam at nisi porro a, quaerat rem repellendus.
+          Voluptates perspiciatis, in pariatur impedit, nam facilis libero dolorem
+          dolores sunt inventore perferendis, aut sapiente modi nesciunt.
+        </Typography>
+      </Container>
+    </Box>
+  );
 }
+
+export default DrawerAppBar;
