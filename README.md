@@ -1,19 +1,20 @@
 # Development
 
-install{
-- npm
-- node
-- truffle
+## Initialization:
+### With Docker (Recommended):
+- git clone https://github.com/SUFriends/SUFriends
+- docker yapsak sarar 
 
-}
+### Local:
+#### Install: 
+- npm (https://www.npmjs.com/)
+- node.js (https://nodejs.org/en/)
+- truffle suite (https://trufflesuite.com/)
 
-downlaod {
-- @openzeppelin repo
-
-}
-
-1. setup local blockchain: npx ganache
-2. open a new terminal
+#### Setup Steps:
+1. git clone https://github.com/SUFriends/SUFriends
+2. npm install --save-dev ganache 
+3. npx ganache --deterministic
 3. truffle migrate --network development
 4. truffle exec --network development ./scripts/index.js
 

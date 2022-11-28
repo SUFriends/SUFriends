@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "ganache": "ganache --wallet.seed myCustomSeed"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -15,5 +16,8 @@
     "next": "latest",
     "react": "18.2.0",
     "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "ganache": "^7.5.0"
   }
 }

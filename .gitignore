@@ -1,5 +1,7 @@
+# secret keys for development
 *.secret
 
+# npm install ..
 node_modules
 
 package*
