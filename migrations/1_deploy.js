@@ -31,7 +31,11 @@ module.exports = async function (deployer) {
     /* -------- Works Until Here -------- */
 
     // Deploy Governor
-    await deployer.deploy(Governor, token.address, timelock.address); // constructor gas limit exceeded
+    const quorum = 10 // Percentage of total supply of tokens needed to aprove proposals (5%)
+    const votingDelay = 0 // How many blocks after proposal until voting becomes active
+    const votingPeriod = 5 // How many blocks to allow voters to vote
+
+    await deployer.deploy(Governor, token.address, timelock.address, quorum, votingDelay, votingPeriod); // constructor gas limit exceeded
     const governor = await Governor.deployed();
 
     console.log('governor', governor.address)

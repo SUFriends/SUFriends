@@ -7,13 +7,20 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 contract SUFriendGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
-    constructor(IVotes _token, TimelockController _timelock)
+    constructor(
+        ERC20Votes _token,
+        TimelockController _timelock, 
+        uint256 _quorum,
+        uint256 _votingDelay,
+        uint256 _votingPeriod
+    )
         Governor("SUFriendGovernor")
-        GovernorSettings(1 /* 1 block */, 201600 /* 1 week */, 1e18)
+        GovernorSettings(_votingDelay, _votingPeriod, 1e18)
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(70)
+        GovernorVotesQuorumFraction(_quorum)
         GovernorTimelockControl(_timelock)
     {}
 
