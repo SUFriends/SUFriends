@@ -1,10 +1,12 @@
 import * as React from 'react';
-import { styled, AppBar, Box, Toolbar, Container, Typography, Button } from '@mui/material';
+import { styled, AppBar, Box, Toolbar, Container, Typography, Button, Tabs, Tab } from '@mui/material';
 import Image from 'next/image';
 import Head from 'next/head';
 import logo from '../public/logo.png';
+import Link from 'next/link';
+import { useRouter } from 'next/router'
 
-const navItems = ['Home', 'About', 'Contact'];
+const navItems = [{ title: 'Proposals', route: 'proposals' }, { title: 'Members', route: 'members' }, { title: 'Treasury', route: 'treasury' }];
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'flex-center',
   // Override media queries injected by theme.mixins.toolbar
@@ -13,8 +15,27 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   },
 }));
 
+function LinkTab(props) {
+  const router = useRouter();
+  return (
+    <Tab
+      component="a"
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...props}
+    />
+  );
+}
+
 
 function DrawerAppBar(props) {
+  const [value, setValue] = React.useState(0);
+
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
   return (
     <Box sx={{ display: 'flex' }}>
       <Head>
@@ -24,20 +45,26 @@ function DrawerAppBar(props) {
 
       <AppBar component="nav" color='transparent' >
         <Container>
-          <StyledToolbar>
+          <StyledToolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
             <Image
               alt="Logo"
               src={logo}
               placeholder="blur"
               width={200}
             />
-            <Box sx={{ ml: 2, mt: 1}}>
-              {navItems.map((item) => (
-                <Button key={item} sx={{ mx: 1}} variant="text" size='large'>
-                  {item}
-                </Button>
-              ))}
+            <Box sx={{ ml: 2, mt: 1, }}>
+              <Tabs value={value} onChange={handleChange}>
+                {navItems.map((item) => (
+
+                  <LinkTab key={item} label={item.title} href={'/' + item.route} sx={{ mx: 1 }} variant="text" size='large' />
+
+                ))}
+              </Tabs>
             </Box>
+
+            <Button sx={{ mx: 1, mt: 1 }} variant="contained" size='large'>
+              Connect Wallet
+            </Button>
           </StyledToolbar>
         </Container>
       </AppBar>
