@@ -11,9 +11,21 @@ function Proposals(props) {
           Create new proposal
         </Button>
       </Grid>
-      <ProposalCard title="should we implement this" id="0x57d39B2a3d9Ea14062856388BaF34a6AC17D05fa" status="In progress"></ProposalCard>
-      <ProposalCard title="test test test test test" id="0x57d39B2a3d9Ea14062856388BaF34a6AC17D05fa" status="Accepted"></ProposalCard>
-      <ProposalCard title="hello hello hello hello hello" id="0x57d39B2a3d9Ea14062856388BaF34a6AC17D05fa" status="Denied"></ProposalCard>
+      <ProposalCard
+        title="should we implement this"
+        id=" c69c2c...8b77"
+        status="In progress"
+      ></ProposalCard>
+      <ProposalCard
+        title="test test test test test"
+        id=" c69c2c...8b77"
+        status="Accepted"
+      ></ProposalCard>
+      <ProposalCard
+        title="hello hello hello hello hello"
+        id=" c69c2c...8b77"
+        status="Denied"
+      ></ProposalCard>
     </Layout>
   );
 }
