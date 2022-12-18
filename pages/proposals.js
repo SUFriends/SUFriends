@@ -15,16 +15,25 @@ function Proposals(props) {
         title="should we implement this"
         id=" c69c2c...8b77"
         status="In progress"
+        yesVotes={50}
+        noVotes={50}
+        numOfDifferentAddresses={10}
       ></ProposalCard>
       <ProposalCard
         title="test test test test test"
         id=" c69c2c...8b77"
         status="Accepted"
+        yesVotes={80}
+        noVotes={20}
+        numOfDifferentAddresses={10}
       ></ProposalCard>
       <ProposalCard
         title="hello hello hello hello hello"
         id=" c69c2c...8b77"
         status="Denied"
+        yesVotes={30}
+        noVotes={70}
+        numOfDifferentAddresses={10}
       ></ProposalCard>
     </Layout>
   );

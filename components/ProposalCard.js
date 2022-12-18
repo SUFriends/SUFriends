@@ -10,17 +10,8 @@ import {
 } from "@mui/material";
 import { lightGreen } from "@mui/material/colors";
 
-function LinearProgressWithLabel({ color, ...props }) {
-  return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
-      <Box sx={{ minWidth: 35 }}>
-        <Typography variant="body2" color={color}></Typography>
-      </Box>
-      <Box sx={{ width: "100%", mr: 1 }}>
-        <LinearProgress variant="determinate" {...props} />
-      </Box>
-    </Box>
-  );
+function getYesPercentage(yesVotes, totalVotes) {
+  return (yesVotes / totalVotes) * 100;
 }
 
 function getChipColor(status) {
@@ -34,7 +25,18 @@ function getChipColor(status) {
   }
 }
 
-export default function ProposalCard({ title, status, id }) {
+export default function ProposalCard({
+  title,
+  status,
+  id,
+  yesVotes,
+  noVotes,
+  numOfDifferentAddresses,
+}) {
+  const totalVotes = yesVotes + noVotes;
+  const yesPercentage = getYesPercentage(yesVotes, totalVotes);
+  const noPercentage = 100 - yesPercentage;
+  console.log(yesPercentage)
   return (
     <>
       <Card sx={{ p: 2, my: 2 }}>
@@ -59,26 +61,30 @@ export default function ProposalCard({ title, status, id }) {
           <Grid container item xs={6} spacing={3} justifyContent="flex-end">
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="success">
-                Yes • 7.6M
+                Yes • {yesVotes}
               </Typography>
               <LinearProgress
                 variant="determinate"
                 color="success"
-                value="20"
+                value={yesPercentage}
               />
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="success">
-                No • 7.6M
+                No • {noVotes}
               </Typography>
-              <LinearProgress variant="determinate" color="error" value="20" />
+              <LinearProgress
+                variant="determinate"
+                color="error"
+                value={noPercentage}
+              />
             </Grid>
             <Grid item xs={4}>
               <Typography variant="subtitle2" color="success">
-                Total 7.6M Votes
+                Total {totalVotes} Votes
               </Typography>
               <Typography variant="subtitle2" color="success" noWrap>
-                600 Addresses
+                {numOfDifferentAddresses} Addresses
               </Typography>
             </Grid>
           </Grid>
