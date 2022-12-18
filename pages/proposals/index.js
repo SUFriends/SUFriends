@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Button, Grid } from "@mui/material";
-import Layout from "../components/layouts/layout";
-import ProposalCard from "../components/ProposalCard";
+import Layout from "../../components/layouts/layout";
+import ProposalCard from "../../components/ProposalCard";
 
 function Proposals(props) {
   return (
@@ -13,28 +13,28 @@ function Proposals(props) {
       </Grid>
       <ProposalCard
         title="should we implement this"
-        id=" c69c2c...8b77"
+        id="c69c2c...8b77"
         status="In progress"
         yesVotes={50}
         noVotes={50}
         numOfDifferentAddresses={10}
-      ></ProposalCard>
+      />
       <ProposalCard
         title="test test test test test"
-        id=" c69c2c...8b77"
+        id="c69c2c...8b77"
         status="Accepted"
         yesVotes={80}
         noVotes={20}
         numOfDifferentAddresses={10}
-      ></ProposalCard>
+      />
       <ProposalCard
         title="hello hello hello hello hello"
-        id=" c69c2c...8b77"
+        id="c69c2c...8b77"
         status="Denied"
         yesVotes={30}
         noVotes={70}
         numOfDifferentAddresses={10}
-      ></ProposalCard>
+      />
     </Layout>
   );
 }

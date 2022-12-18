@@ -9,6 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import { lightGreen } from "@mui/material/colors";
+import { useRouter } from "next/router";
 
 function getYesPercentage(yesVotes, totalVotes) {
   return (yesVotes / totalVotes) * 100;
@@ -24,6 +25,14 @@ function getChipColor(status) {
       return "success";
   }
 }
+const titleSX = {
+  "&:hover": {
+    textDecoration: "underline",
+    cursor: "pointer",
+  },
+};
+
+function goToDetails(event, id) {}
 
 export default function ProposalCard({
   title,
@@ -36,7 +45,8 @@ export default function ProposalCard({
   const totalVotes = yesVotes + noVotes;
   const yesPercentage = getYesPercentage(yesVotes, totalVotes);
   const noPercentage = 100 - yesPercentage;
-  console.log(yesPercentage)
+  const router = useRouter();
+
   return (
     <>
       <Card sx={{ p: 2, my: 2 }}>
@@ -44,7 +54,17 @@ export default function ProposalCard({
           <Grid container item xs={6} alignItems="center">
             <Avatar sx={{ bgcolor: lightGreen[300], mr: 2 }}> </Avatar>
             <Stack spacing={1}>
-              <Typography variant="h6">{title}</Typography>
+              <Typography
+                sx={titleSX}
+                onClick={(event) => {
+                  event.preventDefault();
+                  router.push("/proposals/" + id);
+                }}
+                href={"/proposals/" + id}
+                variant="h6"
+              >
+                {title}
+              </Typography>
               <Stack direction="row" spacing={2} alignItems="center">
                 <Chip
                   label={status}
