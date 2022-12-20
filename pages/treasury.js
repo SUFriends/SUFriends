@@ -6,7 +6,7 @@ import TransactionCard from "../components/TransactionCard";
 
 function Treasury(props) {
   return (
-    <Layout>
+    <>
       <Typography variant="h6">Total Balance</Typography>
       <Typography variant="h4">{"0.2"} ETH</Typography>
       <Typography variant="h6" sx={{ my: 4 }}>
@@ -48,7 +48,7 @@ function Treasury(props) {
         actionType="Sent to"
         id="0x6d21266dfcf5541bee9f67c4837aaa72b3bf9303"
       />
-    </Layout>
+    </>
   );
 }
 

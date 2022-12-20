@@ -6,6 +6,7 @@ import logo from '../public/logo.png';
 import Link from 'next/link';
 import { useRouter } from 'next/router'
 
+
 const navItems = [{ title: 'Proposals', route: 'proposals' }, { title: 'Members', route: 'members' }, { title: 'Treasury', route: 'treasury' }];
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   alignItems: 'flex-center',
@@ -36,6 +37,8 @@ function DrawerAppBar(props) {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
   return (
     <Box sx={{ display: 'flex' }}>
       <Head>
@@ -56,7 +59,7 @@ function DrawerAppBar(props) {
               <Tabs value={value} onChange={handleChange}>
                 {navItems.map((item) => (
 
-                  <LinkTab key={item} label={item.title} href={'/' + item.route} sx={{ mx: 1 }} variant="text" size='large' />
+                  <LinkTab key={item.title} label={item.title} href={'/' + item.route} sx={{ mx: 1 }} variant="text" size='large' />
 
                 ))}
               </Tabs>
@@ -110,3 +113,5 @@ function DrawerAppBar(props) {
 }
 
 export default DrawerAppBar;
+
+DrawerAppBar.getLayout = (page) => page
