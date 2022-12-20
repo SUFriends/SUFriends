@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   styled,
   AppBar,
@@ -57,9 +57,9 @@ export default function Layout({ children }) {
     setValue(newValue);
   };
 
-  const [client, setclient] = useState({
-    isConnected: false,
-  });
+  const [client, setclient] = useState({ isConnected: false });
+  const [haveMetamask, sethaveMetamask] = useState(true);
+
 
   const connectWeb3 = async () => {
     const { ethereum } = window;
@@ -78,6 +78,33 @@ export default function Layout({ children }) {
       address: accounts[0],
     });
   };
+
+  const checkConnection = async () => {
+    const { ethereum } = window;
+    if (ethereum) {
+      sethaveMetamask(true);
+      const accounts = await ethereum.request({ method: "eth_accounts" });
+      if (accounts.length > 0) {
+        setclient({
+          isConnected: true,
+          address: accounts[0],
+        });
+      } else {
+        setclient({
+          isConnected: false,
+        });
+      }
+    } else {
+      sethaveMetamask(false);
+    }
+  };
+
+
+  useEffect(() => {
+    checkConnection();
+  }, []);
+
+
 
   return (
     <>
