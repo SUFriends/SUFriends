@@ -7,31 +7,22 @@ import "@openzeppelin/contracts/governance/extensions/GovernorCountingSimple.sol
 import "@openzeppelin/contracts/governance/extensions/GovernorVotes.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorVotesQuorumFraction.sol";
 import "@openzeppelin/contracts/governance/extensions/GovernorTimelockControl.sol";
+import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
-contract GovernerContract is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
-    
-    // constructor
+contract SUFriendGovernor is Governor, GovernorSettings, GovernorCountingSimple, GovernorVotes, GovernorVotesQuorumFraction, GovernorTimelockControl {
     constructor(
-        IVotes _token, 
-        TimelockController _timelock,
+        ERC20Votes _token,
+        TimelockController _timelock, 
+        uint256 _quorum,
         uint256 _votingDelay,
-        uint256 _votingPeriod,
-        uint256 _quorumPercentage
+        uint256 _votingPeriod
     )
-        Governor("GovernerContract")
-        GovernorSettings(
-            _votingDelay /* 1 block */, 
-            _votingPeriod /* 1 week */, 
-            _quorumPercentage
-        )
+        Governor("SUFriendGovernor")
+        GovernorSettings(_votingDelay, _votingPeriod, 1e18)
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(_quorumPercentage)
+        GovernorVotesQuorumFraction(_quorum)
         GovernorTimelockControl(_timelock)
-    {
-        
-
-
-    }
+    {}
 
     // The following functions are overrides required by Solidity.
 
@@ -41,7 +32,7 @@ contract GovernerContract is Governor, GovernorSettings, GovernorCountingSimple,
         override(IGovernor, GovernorSettings)
         returns (uint256)
     {
-        return super.votingDelay(); // imidiate parent contract
+        return super.votingDelay();
     }
 
     function votingPeriod()
