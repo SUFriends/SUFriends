@@ -40,3 +40,4 @@ function Proposals(props) {
 }
 
 export default Proposals;
+// deneme workout

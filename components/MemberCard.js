@@ -7,7 +7,7 @@ export default function MemberCard({ id, proposalsVoted }) {
       <Stack direction="row" justifyContent="space-between" alignItems="center">
         <Stack direction="row" spacing={3} alignItems="center">
           <Typography>1</Typography>
-          <Avatar sx={{ bgcolor: red[300] }}> </Avatar>
+          <Avatar sx={{ bgcolor: green[300] }}> </Avatar> // changes red to green 
           <Typography>{id}</Typography>
         </Stack>
         <Typography> Proposals voted: {proposalsVoted}</Typography>
