@@ -5,7 +5,7 @@ import ProposalCard from "../../components/ProposalCard";
 
 function Proposals(props) {
   return (
-    <Layout>
+    <>
       <Grid container justifyContent="flex-end">
         <Button variant="outlined" disableElevation>
           Create new proposal
@@ -35,7 +35,7 @@ function Proposals(props) {
         noVotes={70}
         numOfDifferentAddresses={10}
       />
-    </Layout>
+    </>
   );
 }
 

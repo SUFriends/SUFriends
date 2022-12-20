@@ -12,6 +12,7 @@
     "@mui/icons-material": "^5.10.15",
     "@mui/material": "^5.10.15",
     "dotenv": "^16.0.3",
+    "ethers": "^5.7.2",
     "mongodb": "^3.7.3",
     "next": "latest",
     "react": "18.2.0",

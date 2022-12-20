@@ -42,6 +42,9 @@ function LinkTab({ href, ...otherProps }) {
   );
 }
 
+
+
+
 export default function Layout({ children }) {
   const { pathname } = useRouter();
   let currentPathTabIndex;
@@ -52,6 +55,28 @@ export default function Layout({ children }) {
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const [client, setclient] = useState({
+    isConnected: false,
+  });
+
+  const connectWeb3 = async () => {
+    const { ethereum } = window;
+
+    if (!ethereum) {
+      console.log("Metamask not detected");
+      return;
+    }
+
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+
+    setclient({
+      isConnected: true,
+      address: accounts[0],
+    });
   };
 
   return (
@@ -83,8 +108,24 @@ export default function Layout({ children }) {
                 </Tabs>
               </Box>
 
-              <Button sx={{ mt: 1 }} variant="contained" size="large">
-                Connect Wallet
+              <Button sx={{ mt: 1 }} variant="contained" size="large" onClick={connectWeb3}>
+                {client.isConnected ? (
+                  <>
+                    {client.address.slice(0, 8)}...
+                    {client.address.slice(38, 42)}
+                  </>
+                ) : (
+                  <>
+                    {client.isConnected ? (
+                      <>
+                        {client.address.slice(0, 4)}...
+                        {client.address.slice(38, 42)}
+                      </>
+                    ) : (
+                      <>Connect Wallet</>
+                    )}
+                  </>
+                )}
               </Button>
             </StyledToolbar>
           </Container>
