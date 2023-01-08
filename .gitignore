@@ -6,7 +6,12 @@ node_modules
 
 package*
 
-/node_modules
+!node_modules/
+node_modules/*
+!node_modules/mui-rte/
+node_modules/mui-rte/*
+!node_modules/mui-rte/index.js
+
 /.pnp
 .pnp.js
 
