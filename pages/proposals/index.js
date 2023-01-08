@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ProposalCard from "../../components/ProposalCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import MUIRichTextEditor from "mui-rte";
+import MUIRichTextEditor from "../../components/mui-rte";
 
 const myTheme = createTheme({
   components: {
