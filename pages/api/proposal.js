@@ -11,11 +11,11 @@ export default async function handler(req, res) {
   const db = client.db("sufriends");
   switch (req.method) {
     case "POST":
-      // TODO check on the blockchain 
-      // if this proposal hash is really proposed by this proposer 
-      let bodyObject = JSON.parse(JSON.stringify(req.body));
-      console.log(bodyObject);
-      bodyObject["descriptionHash"] = sha256(req.body["description"]);
+      // TODO check on the blockchain
+      // if this proposal hash is really proposed by this proposer
+      let bodyObject = JSON.parse(req.body);
+      bodyObject["descriptionHash"] = sha256(bodyObject["description"]);
+
       let proposal = await db.collection("proposals").insertOne(bodyObject);
       res.json(proposal.ops[0]);
       break;

@@ -8,6 +8,8 @@ import {
   Tab,
   Tabs,
   Stack,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import ProposalCard from "../../components/ProposalCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -44,29 +46,46 @@ const style = {
   p: 4,
 };
 
-async function handleSave(value) {
-  try {
+export default function Proposals(props) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  function handleSave(value) {
     const body = {
       description: value,
       proposer: "123921893213",
     };
-    await fetch("/api/proposal", {
+    fetch("/api/proposal", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
       body: JSON.stringify(body),
-    });
-  } catch (error) {
-    console.log(error);
+    })
+      .then((response) => {
+        if (response.status == "200") {
+          setSnackbarState(true);
+        } else {
+          setSnackbarState(false);
+        }
+      })
+      .catch((e) => {
+        console.log("gir amkkkkk", e);
+        setSnackbarState(false);
+      });
+
+    setSnackbarOpen(true);
+    setModalOpen(false);
   }
-}
-export default function Proposals(props) {
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+
   let content = "";
-  const sample = "<h1>Hello, {{name}}!</h1><p>this is test</p>";
   if (typeof document === "undefined") {
     // during server evaluation
   } else {
@@ -98,9 +117,25 @@ export default function Proposals(props) {
 
   return (
     <>
-      <Modal
-        open={open}
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
         onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackbarState ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {snackbarState
+            ? "Proposal successfully created!"
+            : "An error occured. Proposal could not be created!"}
+        </Alert>
+      </Snackbar>
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -110,7 +145,7 @@ export default function Proposals(props) {
             <TextField type="number" label="Amount (ETH)" variant="outlined" />
 
             <Tabs value={0}>
-              <Tab label="Description">Description</Tab>
+              <Tab label="Description" />
             </Tabs>
           </Stack>
 
@@ -140,7 +175,7 @@ export default function Proposals(props) {
         </Box>
       </Modal>
       <Grid container justifyContent="flex-end">
-        <Button onClick={handleOpen} variant="outlined" disableElevation>
+        <Button onClick={handleModalOpen} variant="outlined" disableElevation>
           Create new proposal
         </Button>
       </Grid>
