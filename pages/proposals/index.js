@@ -36,8 +36,21 @@ const style = {
 };
 
 async function handleSave(value) {
-  console.log(value);
-  console.log(JSON.stringify(value));
+  try {
+    const body = {
+      "description": value,
+      "proposer": "123921893213",
+    };
+    await fetch("/api/proposal", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 export default function Proposals(props) {
   const [open, setOpen] = useState(false);
