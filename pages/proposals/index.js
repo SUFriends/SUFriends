@@ -1,13 +1,181 @@
-import * as React from "react";
-import { Button, Grid } from "@mui/material";
-import Layout from "../../components/layouts/layout";
+import { useState } from "react";
+import {
+  Button,
+  Grid,
+  Modal,
+  Box,
+  TextField,
+  Tab,
+  Tabs,
+  Stack,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import ProposalCard from "../../components/ProposalCard";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MUIRichTextEditor from "mui-rte";
 
-function Proposals(props) {
+const myTheme = createTheme({
+  components: {
+    // @ts-ignore
+    MUIRichTextEditor: {
+      root: {
+        marginTop: 20,
+        width: "80%",
+        height: "200px",
+        maxHeight: "500px",
+      },
+      editor: {
+        height: "200px",
+        maxHeight: "500px",
+        overflow: "auto",
+      },
+    },
+  },
+});
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "50%",
+  maxHeight: "80%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
+
+export default function Proposals(props) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+  const [snackbarState, setSnackbarState] = useState(false);
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+    setSnackbarOpen(false);
+  };
+
+  function handleSave(value) {
+    const body = {
+      description: value,
+      proposer: "123921893213",
+    };
+    fetch("/api/proposal", {
+      method: "POST",
+      body: JSON.stringify(body),
+    })
+      .then((response) => {
+        if (response.status == "200") {
+          setSnackbarState(true);
+        } else {
+          setSnackbarState(false);
+        }
+      })
+      .catch((e) => {
+        console.log("gir amkkkkk", e);
+        setSnackbarState(false);
+      });
+
+    setSnackbarOpen(true);
+    setModalOpen(false);
+  }
+
+  let content = "";
+  if (typeof document === "undefined") {
+    // during server evaluation
+  } else {
+    const raw = {
+      blocks: [
+        {
+          key: "fe0eb",
+          text: "Hello, {{name}}!",
+          type: "header-one",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+        {
+          key: "bnqjc",
+          text: "this is test",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    };
+    content = JSON.stringify(raw);
+  }
+
   return (
     <>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={snackbarOpen}
+        autoHideDuration={6000}
+        onClose={handleClose}
+      >
+        <Alert
+          onClose={handleClose}
+          severity={snackbarState ? "success" : "error"}
+          sx={{ width: "100%" }}
+        >
+          {snackbarState
+            ? "Proposal successfully created!"
+            : "An error occured. Proposal could not be created!"}
+        </Alert>
+      </Snackbar>
+      <Modal
+        open={modalOpen}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Stack spacing={3}>
+            <TextField label="Receiver" variant="outlined" />
+            <TextField type="number" label="Amount (ETH)" variant="outlined" />
+
+            <Tabs value={0}>
+              <Tab label="Description" />
+            </Tabs>
+          </Stack>
+
+          <ThemeProvider theme={myTheme}>
+            <MUIRichTextEditor
+              defaultValue={content}
+              controls={[
+                "title",
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "highlight",
+                "link",
+                "media",
+                "numberList",
+                "bulletList",
+                "quote",
+                "code",
+                "clear",
+                "save",
+              ]}
+              onSave={(value) => handleSave(value)}
+              label="Start typing..."
+            />
+          </ThemeProvider>
+        </Box>
+      </Modal>
       <Grid container justifyContent="flex-end">
-        <Button variant="outlined" disableElevation>
+        <Button onClick={handleModalOpen} variant="outlined" disableElevation>
           Create new proposal
         </Button>
       </Grid>
@@ -38,6 +206,3 @@ function Proposals(props) {
     </>
   );
 }
-
-export default Proposals;
-// deneme workout
