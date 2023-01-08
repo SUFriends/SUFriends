@@ -1,21 +1,78 @@
 import { useState } from "react";
 import { Button, Grid, Modal, Box, Typography } from "@mui/material";
 import ProposalCard from "../../components/ProposalCard";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import MUIRichTextEditor from "mui-rte";
+
+const myTheme = createTheme({
+  components: {
+    // @ts-ignore
+    MUIRichTextEditor: {
+      root: {
+        marginTop: 20,
+        width: "80%",
+        height: "200px",
+        maxHeight: "500px",
+      },
+      editor: {
+        height: "200px",
+        maxHeight: "500px",
+        overflow: "auto",
+      },
+    },
+  },
+});
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 400,
+  width: "50%",
+  maxHeight: "80%",
   bgcolor: "background.paper",
   border: "2px solid #000",
   boxShadow: 24,
   p: 4,
 };
+
+async function handleSave(value) {
+  console.log(value);
+  console.log(JSON.stringify(value));
+}
 export default function Proposals(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  let content = "";
+  const sample = "<h1>Hello, {{name}}!</h1><p>this is test</p>";
+  if (typeof document === "undefined") {
+    // during server evaluation
+  } else {
+    const raw = {
+      blocks: [
+        {
+          key: "fe0eb",
+          text: "Hello, {{name}}!",
+          type: "header-one",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+        {
+          key: "bnqjc",
+          text: "this is test",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    };
+    content = JSON.stringify(raw);
+  }
 
   return (
     <>
@@ -29,9 +86,29 @@ export default function Proposals(props) {
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
           </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
+          <ThemeProvider theme={myTheme}>
+            <MUIRichTextEditor
+              defaultValue={content}
+              controls={[
+                "title",
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "highlight",
+                "link",
+                "media",
+                "numberList",
+                "bulletList",
+                "quote",
+                "code",
+                "clear",
+                "save",
+              ]}
+              onSave={(value) => handleSave(value)}
+              label="Start typing..."
+            />
+          </ThemeProvider>
         </Box>
       </Modal>
       <Grid container justifyContent="flex-end">
