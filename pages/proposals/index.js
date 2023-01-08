@@ -1,5 +1,14 @@
 import { useState } from "react";
-import { Button, Grid, Modal, Box, Typography } from "@mui/material";
+import {
+  Button,
+  Grid,
+  Modal,
+  Box,
+  TextField,
+  Tab,
+  Tabs,
+  Stack,
+} from "@mui/material";
 import ProposalCard from "../../components/ProposalCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIRichTextEditor from "mui-rte";
@@ -38,8 +47,8 @@ const style = {
 async function handleSave(value) {
   try {
     const body = {
-      "description": value,
-      "proposer": "123921893213",
+      description: value,
+      proposer: "123921893213",
     };
     await fetch("/api/proposal", {
       method: "POST",
@@ -96,9 +105,15 @@ export default function Proposals(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
+          <Stack spacing={3}>
+            <TextField label="Receiver" variant="outlined" />
+            <TextField type="number" label="Amount (ETH)" variant="outlined" />
+
+            <Tabs value={0}>
+              <Tab label="Description">Description</Tab>
+            </Tabs>
+          </Stack>
+
           <ThemeProvider theme={myTheme}>
             <MUIRichTextEditor
               defaultValue={content}
