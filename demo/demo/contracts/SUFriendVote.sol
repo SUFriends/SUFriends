@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Votes.sol";
 
 contract SUFriendVote is ERC20, ERC20Burnable, Ownable, ERC20Permit, ERC20Votes {
     constructor() ERC20("SUFriendVote", "SUFV") ERC20Permit("SUFriendVote") {
-        _mint(msg.sender, 1000 * 10 ** decimals());
+        _mint(msg.sender, 100 * 10 ** decimals());
     }
 
     function mint(address to, uint256 amount) public onlyOwner {
