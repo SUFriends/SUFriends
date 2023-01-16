@@ -17,7 +17,7 @@ contract SUFriendGovernor is Governor, GovernorSettings, GovernorCountingSimple,
             100e18
         )
         GovernorVotes(_token)
-        GovernorVotesQuorumFraction(70)
+        GovernorVotesQuorumFraction(4)
         GovernorTimelockControl(_timelock)
     {}
 
