@@ -15,6 +15,7 @@ module.exports = async (deployer, network, accounts) => {
     // give tokens to voters
     console.log("giving 5 votes to each voter:")
     const amount = web3.utils.toWei('5', 'ether')
+    await instance_vote.transfer(proposer, amount, { from: executor })
     await instance_vote.transfer(voter1, amount, { from: executor })
     await instance_vote.transfer(voter2, amount, { from: executor })
     await instance_vote.transfer(voter3, amount, { from: executor })
