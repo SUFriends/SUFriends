@@ -33,7 +33,7 @@ module.exports = async (deployer, network, accounts) => {
 
     // treasury (owner = timelock)
     const funds = web3.utils.toWei('5', 'ether');
-    await deployer.deploy(Treasury, executor, {value: funds, from: executor}); // executor acc deploys treasury contract
+    await deployer.deploy(Treasury, {value: funds, from: executor}); // executor acc deploys treasury contract
     const instance_treasury = await Treasury.deployed();
 
     // transfer ownership of treasury (executor -> timelock)

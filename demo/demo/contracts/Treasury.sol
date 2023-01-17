@@ -6,7 +6,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract Treasury is Ownable {
     uint256 public totalFunds;
 
-    constructor(address _payee) payable {
+    constructor() payable {
         totalFunds = msg.value;
     }
 

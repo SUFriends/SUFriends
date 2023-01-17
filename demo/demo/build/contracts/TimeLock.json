@@ -19542,12 +19542,12 @@
         }
       },
       "links": {},
-      "address": "0xD9aAa5A4D3D26212037Ed07131E2Cd16DD8dD4B8",
-      "transactionHash": "0xb731b6a8195d106dc514e75a47e1e22036ecad6fdb4df979f8ebd1b79d4d9e2e"
+      "address": "0xe43dCF49cf405ADE162b3FE73f97a4BC8D37719A",
+      "transactionHash": "0xac24b6cec2b524bb924e8019e2018672de61e8f6e5c6066eabca6c8d1caa8466"
     }
   },
   "schemaVersion": "3.4.10",
-  "updatedAt": "2023-01-16T19:03:32.674Z",
+  "updatedAt": "2023-01-17T13:00:48.522Z",
   "networkType": "ethereum",
   "devdoc": {
     "kind": "dev",
