@@ -1,5 +1,6 @@
 {
   "author": "",
+  "version": "0.0.1",
   "license": "MIT",
   "private": true,
   "scripts": {
@@ -8,7 +9,7 @@
     "start": "next start",
     "ganache": "ganache --wallet.seed myCustomSeed",
     "migrate": "truffle migrate --network development",
-    "exec": "truffle exec --network development ./scripts/index.js"
+    "proposal": "truffle exec scripts/1_create_proposal.js"
   },
   "dependencies": {
     "@emotion/react": "^11.10.5",
@@ -25,7 +26,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "ganache": "^7.5.0",
+    "ganache": "^7.7.3",
     "@openzeppelin/contracts": "^4.8.0"
   }
 }
