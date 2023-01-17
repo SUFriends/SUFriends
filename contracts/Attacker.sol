@@ -1,6 +1,7 @@
+/*
 pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/test-helpers/contracts/Assert.sol";
+//import "@openzeppelin/test-helpers/contracts/Assert.sol";
 
 contract Attacker is Ownable {
     Treasury public treasury;
@@ -17,3 +18,4 @@ contract Attacker is Ownable {
         attack();
     }
 }
+*/
