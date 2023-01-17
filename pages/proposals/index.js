@@ -85,6 +85,11 @@ export default function Proposals(props) {
     setModalOpen(false);
   }
 
+  const submitProposal = () => {
+    console.log("hi");
+  }
+
+
   let content = "";
   if (typeof document === "undefined") {
     // during server evaluation
@@ -172,6 +177,9 @@ export default function Proposals(props) {
               label="Start typing..."
             />
           </ThemeProvider>
+          <Button onClick={submitProposal} variant="outlined" disableElevation>
+            Submit
+          </Button>
         </Box>
       </Modal>
       <Grid container justifyContent="flex-end">
