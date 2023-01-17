@@ -10,9 +10,11 @@ contract Treasury is Ownable {
         totalFunds = msg.value;
     }
 
+    event Released(address, uint256);
     function releaseFunds(address payee, uint256 amount) public onlyOwner {
         totalFunds -= amount;
         payable(payee).transfer(amount);
+        emit Released(payee, amount);
     }
 
     event Received(address, uint);
