@@ -1,13 +1,17 @@
-// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract Treasury is Ownable {
     uint256 public totalFunds;
+    address[] public users;
 
     constructor() payable {
         totalFunds = msg.value;
+    }
+
+    function getUsers() public view returns (address[] memory) {
+        return users;
     }
 
     event Released(address, uint256);
@@ -20,6 +24,7 @@ contract Treasury is Ownable {
     event Received(address, uint);
     receive() external payable {
         totalFunds += msg.value;
+        users.push(msg.sender);
         emit Received(msg.sender, msg.value);
     }
 }
