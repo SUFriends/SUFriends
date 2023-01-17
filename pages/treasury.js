@@ -11,6 +11,7 @@ const ethers = require('ethers');
 function Treasury(props) {
   const [balance, setBalance] = useState(0);
 
+  // balance of treasury
   function getTreasury() {
     const { ethereum } = window;
     const provider = new ethers.providers.Web3Provider(ethereum) 
@@ -23,15 +24,34 @@ function Treasury(props) {
     })
   }
 
+
+  // transfers received / sent
+  function getTransfers(){
+    const { ethereum } = window;
+    const provider = new ethers.providers.Web3Provider(ethereum) 
+    const treasuryContract = new ethers.Contract(addresses.TREASURY_ADDRESS, TreasuryContract.abi, provider);
+
+    const eventName = "Received";
+    treasuryContract.once(eventName, (event) => {
+      console.log("recieved event listened!");
+    })
+  }
+
   useEffect(() => {
     getTreasury();
+    getTransfers();
   }, []);
 
+  const[transfers, setTransfers] = useState([]);
+
+  // TODO: add new transaction card dynamically - bunun icin mongo'da transaction tut
   return (
     <>
       <Typography variant="h6">Total Balance</Typography>
       <Typography variant="h4">{balance} ETH</Typography>
       <Typography variant="h6" sx={{ my: 4 }}>Owners</Typography>
+      {transfers.map }
+
       <MemberCard
         id="0x57d39B2a3d9Ea14062856388BaF34a6AC17D05fa"
         proposalsVoted="1"
@@ -40,12 +60,14 @@ function Treasury(props) {
       <Typography variant="h6" sx={{ my: 4 }}>
         Pending transactions
       </Typography>
+
       <TransactionCard
         amount="100"
         date="Thu, Dec 15, 2022"
         actionType="In progress"
         id="0x6d21266dfcf5541bee9f67c4837aaa72b3bf9303"
       />
+
       <TransactionCard
         amount="100"
         date="Thu, Dec 15, 2022"

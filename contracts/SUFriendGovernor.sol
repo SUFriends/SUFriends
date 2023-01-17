@@ -12,7 +12,7 @@ contract SUFriendGovernor is Governor, GovernorSettings, GovernorCountingSimple,
     constructor(IVotes _token, TimelockController _timelock)
         Governor("SUFriendGovernor")
         GovernorSettings(
-            1 /* votingDelay: 1 block */, 
+            0 /* votingDelay: 1 block */, 
             10 /* votingPeriod: 1 block */,
             1e18 /* proposalThreshold */
         )

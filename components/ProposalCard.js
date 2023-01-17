@@ -73,7 +73,7 @@ export default function ProposalCard({
                 />
                 <Typography variant="caption" noWrap>
                   {" "}
-                  ID: {id}
+                  ID: {id.slice(0, 4) + '...' + id.slice(38, 42)}
                 </Typography>
               </Stack>
             </Stack>

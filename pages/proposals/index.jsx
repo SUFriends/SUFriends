@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Button,
   Grid,
@@ -14,6 +14,12 @@ import {
 import ProposalCard from "../../components/ProposalCard";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import MUIRichTextEditor from "../../components/mui-rte";
+import {ethers } from "ethers";
+import addresses from "../../utils/constants"
+import GovernorContract from "../../build/contracts/SUFriendGovernor.json"
+import TreasuryContract from "../../build/contracts/Treasury.json"
+
+
 
 const myTheme = createTheme({
   components: {
@@ -48,10 +54,18 @@ const style = {
 
 export default function Proposals(props) {
   const [modalOpen, setModalOpen] = useState(false);
+  
+  const [receiver, setReceiver] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [title, setTitle] = useState("");
+
   const handleModalOpen = () => setModalOpen(true);
   const handleModalClose = () => setModalOpen(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarState, setSnackbarState] = useState(false);
+
+
+  const [proposalCards, setProposalCards] = useState([]);
 
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
@@ -60,11 +74,49 @@ export default function Proposals(props) {
     setSnackbarOpen(false);
   };
 
-  function handleSave(value) {
+  async function handleSave(value){
+    const { ethereum } = window;
+    const provider = new ethers.providers.Web3Provider(ethereum) 
+
+    const treasuryContract = new ethers.Contract(addresses.TREASURY_ADDRESS, TreasuryContract.abi, provider);
+
+    const accounts = await ethereum.request({
+      method: "eth_requestAccounts",
+    });
+    const walletAddress = accounts[0]    // first account in MetaMask
+    const signer = provider.getSigner(walletAddress)
+
+    const governorContract = new ethers.Contract(addresses.GOV_ADDRESS, GovernorContract.abi, signer);
+
+    console.log({governorContract});
+    console.log([ethers.utils.getAddress(receiver), amount]);
+
+    // create tx
+    // TODO
+    const receiver_addr = ethers.utils.getAddress(receiver);
+    const amount_int = ethers.utils.parseEther(amount);
+    const transferCalldata = treasuryContract.interface.encodeFunctionData("releaseFunds", [receiver_addr, amount_int]);
+    const description = "some description";
+
+    console.log(transferCalldata);
+    // propose releaseFunds
+    const tx = await governorContract.propose(
+      [treasuryContract.address],
+      [0],
+      [transferCalldata],
+      description
+    )
+    
+    
+    // take proposal data 
+    const proposer = await provider.getSigner().getAddress();
     const body = {
+      title,
+      receiver,
       description: value,
-      proposer: "123921893213",
+      proposer,
     };
+
     fetch("/api/proposal", {
       method: "POST",
       body: JSON.stringify(body),
@@ -77,7 +129,6 @@ export default function Proposals(props) {
         }
       })
       .catch((e) => {
-        console.log("gir amkkkkk", e);
         setSnackbarState(false);
       });
 
@@ -85,10 +136,26 @@ export default function Proposals(props) {
     setModalOpen(false);
   }
 
-  const submitProposal = () => {
-    console.log("hi");
+  async function getAllProposals(){
+    fetch("/api/proposal", {method: "GET"})
+      .then( (response) => {
+        response.json().then( (e) => {
+          console.log(e.data); //e.data
+          setProposalCards(e.data);
+          console.log(proposalCards)
+
+        });
+      })
+      .catch((e) => {
+        console.log(e);
+      });
   }
 
+
+  useEffect(() => {
+    getAllProposals();
+  }, []);
+  
 
   let content = "";
   if (typeof document === "undefined") {
@@ -146,8 +213,9 @@ export default function Proposals(props) {
       >
         <Box sx={style}>
           <Stack spacing={3}>
-            <TextField label="Receiver" variant="outlined" />
-            <TextField type="number" label="Amount (ETH)" variant="outlined" />
+            <TextField onChange={(e) => {setReceiver(e.target.value)}} label="Receiver" variant="outlined" />
+            <TextField onChange={(e) => {setAmount(e.target.value)}} type="number" label="Amount (ETH)" variant="outlined" />
+            <TextField onChange={(e) => {setTitle(e.target.value)}} label="Title" variant="outlined" />
 
             <Tabs value={0}>
               <Tab label="Description" />
@@ -177,9 +245,6 @@ export default function Proposals(props) {
               label="Start typing..."
             />
           </ThemeProvider>
-          <Button onClick={submitProposal} variant="outlined" disableElevation>
-            Submit
-          </Button>
         </Box>
       </Modal>
       <Grid container justifyContent="flex-end">
@@ -187,30 +252,25 @@ export default function Proposals(props) {
           Create new proposal
         </Button>
       </Grid>
-      <ProposalCard
-        title="should we implement this"
-        id="c69c2c...8b77"
-        status="In progress"
-        yesVotes={50}
-        noVotes={50}
-        numOfDifferentAddresses={10}
-      />
-      <ProposalCard
-        title="test test test test test"
-        id="c69c2c...8b77"
-        status="Accepted"
-        yesVotes={80}
-        noVotes={20}
-        numOfDifferentAddresses={10}
-      />
-      <ProposalCard
-        title="hello hello hello hello hello"
-        id="c69c2c...8b77"
-        status="Denied"
-        yesVotes={30}
-        noVotes={70}
-        numOfDifferentAddresses={10}
-      />
+      
+
+      <div>
+        {
+          proposalCards.map((proposal) => {
+            return (
+              <ProposalCard
+                title= {proposal.title}
+                id= {proposal.descriptionHash}
+                status= "Denied"
+                yesVotes={30}
+                noVotes={70}
+                numOfDifferentAddresses={10}
+              /> 
+            );
+          })
+        }   
+      </div>  
+      
     </>
   );
 }
